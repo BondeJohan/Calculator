@@ -8,33 +8,46 @@ namespace Calculator
         static void Main(string[] args)
         {
             bool runApp = true;
+            string name;
+            double num1;
+            double num2;
 
+            // List to save calculations.
             List<string> previousCalculation = new List<string>();
             
             Console.WriteLine("Calculator");
+            name = EnterName();
             
+            // While loop
             while (runApp)
             {
-
-                
-                Console.WriteLine("Please enter your name.");
-                string name = Console.ReadLine();
-                
-                Console.WriteLine("Please enter the first number.");
-                double num1 = Convert.ToDouble(Console.ReadLine());
-                
-                Console.WriteLine("Please enter the second number.");
-                double num2 = Convert.ToDouble(Console.ReadLine());                               
-
-
+                num1 = EnterNumber();
+                num2 = EnterNumber();
                 SelectOperation(num1, num2, name);
                 ContinueSeePreviousOrStop(name);
-
             }
-
-            void SelectOperation(double num1, double num2, string name)
+            
+            // Asks the user for thier name.
+            string EnterName()
             {
-                                
+                Console.WriteLine("Enter your name.");
+                string name = Console.ReadLine();
+                return name;
+            }
+            
+            // Asks the user for a number.
+            double EnterNumber()
+            {
+                Console.WriteLine("Enter a number.");
+                double num = Convert.ToDouble(Console.ReadLine());
+                return num;
+            }           
+ 
+            // Asks the user what kind of operation they want to use with the numbers they have enterd.
+            // Calculates the result and prints it.
+            // Converts the numbers to string to save it in the string list.          
+            void SelectOperation(double num1, double num2, string name)
+            {                                
                 Console.WriteLine("Choose which operation you want to do {0}.", name);
                 Console.WriteLine("1. Addition");
                 Console.WriteLine("2. Subtraction");
@@ -43,56 +56,69 @@ namespace Calculator
                 int choice = Convert.ToInt32(Console.ReadLine());
                 double result;
 
-                if (choice == 1)
+                switch (choice)
                 {
-                    result = num1 + num2;
-                    Console.WriteLine("Your result: {0} + {1} = {2}", num1, num2, result);
-                    previousCalculation.Add(string.Format("{0} + {1} = {2}", num1, num2, result));
-                }
+                    case 1:
+                        result = num1 + num2;
+                        Console.WriteLine("Your result: {0} + {1} = {2}", num1, num2, result);
+                        previousCalculation.Add(string.Format("{0} + {1} = {2}", num1, num2, result));
+                        break;
+                    case 2:
+                        result = num1 - num2;
+                        Console.WriteLine("Your result: {0} + {1} = {2}", num1, num2, result);
+                        previousCalculation.Add(string.Format("{0} - {1} = {2}", num1, num2, result));
+                        break;
 
-                else if (choice == 2)
-                {
-                    result = num1 - num2;
-                    Console.WriteLine("Your result: {0} - {1} = {2}", num1, num2, result);
-                    previousCalculation.Add(string.Format("{0} - {1} = {2}", num1, num2, result));
-                }
+                    case 3:
+                        result = num1 * num2;
+                        Console.WriteLine("Your result: {0} + {1} = {2}", num1, num2, result);
+                        previousCalculation.Add(string.Format("{0} * {1} = {2}", num1, num2, result));
+                        break;
+                    case 4:
+                        result = num1 + num2;
+                        Console.WriteLine("Your result: {0} / {1} = {2}", num1, num2, result);
+                        previousCalculation.Add(string.Format("{0} / {1} = {2}", num1, num2, result));
+                        break;
+                    default:
+                        Console.WriteLine("Wrong input");
+                        SelectOperation(num1, num2, name);
+                        break;
 
-                else if (choice == 3)
-                {
-                    result = num1 * num2;
-                    Console.WriteLine("Your result: {0} * {1} = {2}", num1, num2, result);
-                    previousCalculation.Add(string.Format("{0} * {1} = {2}", num1, num2, result));
-                }
 
-                else if (choice == 4)
-                {
-                    result = num1 / num2;
-                    Console.WriteLine("Your result: {0} / {1} = {2}", num1, num2, result);
-                    previousCalculation.Add(string.Format("{0} / {1} = {2}", num1, num2, result));
+
                 }
-                
             }
 
+            // Asks the user if they want to continue to do more calculations, see their prevoius calculations or end the session.
             void ContinueSeePreviousOrStop(string name)
             {
                 Console.WriteLine("1. Do more calculations.");
-                Console.WriteLine("2. See your previous caclulations.");
+                Console.WriteLine("2. See your previous calculations.");
                 Console.WriteLine("3. Close Calculator");
                 int stopChoice = Convert.ToInt32(Console.ReadLine());
 
-
-                if (stopChoice == 2)
+                switch (stopChoice)
                 {
-                    PrintSavedCalculations();
-                    ContinueSeePreviousOrStop(name);
-                }
+                    case 1:
+                        Console.WriteLine("Starting new calculation {0}.", name);
+                        break;
+                    case 2:
+                        Console.WriteLine("Your previous calculations {0}.", name);
+                        PrintSavedCalculations();
+                        ContinueSeePreviousOrStop(name);
+                        break;
+                    case 3:
+                        StopApp(name);
+                        break;
+                    default:
+                        Console.WriteLine("Invalid Input");
+                        ContinueSeePreviousOrStop(name);
+                        break;
 
-                else if (stopChoice == 3)
-                {
-                    StopApp(name);
                 }
             }
 
+            // Prints out the saved calculations saved in the list.
             void PrintSavedCalculations()
             {
                 foreach (string lastCalculation in previousCalculation)
@@ -101,6 +127,7 @@ namespace Calculator
                 }
             }
 
+            // Returns a false value to stop the program.
             bool StopApp(string name)
             {
                 runApp = false;
