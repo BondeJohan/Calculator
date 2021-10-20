@@ -7,6 +7,7 @@ namespace Calculator
     {
         static void Main(string[] args)
         {
+            // Declare global variables.
             bool runApp = true;
             string name;
             double num1;
@@ -15,6 +16,7 @@ namespace Calculator
             // List to save calculations.
             List<string> previousCalculation = new List<string>();
             
+            // Write Calculator and ask user for a name input.
             Console.WriteLine("Calculator");
             name = EnterName();
             
