@@ -25,7 +25,7 @@ namespace Calculator
             {
                 num1 = EnterNumber();
                 num2 = EnterNumber();
-                SelectOperation(num1, num2, name);
+                SelectPrintSaveOperation(num1, num2, name);
                 ContinueSeePreviousOrStop(name);
             }
             
@@ -48,7 +48,7 @@ namespace Calculator
             // Asks the user what kind of operation they want to use with the numbers they have enterd.
             // Calculates the result and prints it.
             // Converts the numbers to string to save it in the string list.          
-            void SelectOperation(double selectNum1, double selectNum2, string selectName)
+            void SelectPrintSaveOperation(double selectNum1, double selectNum2, string selectName)
             {                                
                 Console.WriteLine("Choose which operation you want to do {0}.", selectName);
                 Console.WriteLine("1. Addition");
@@ -67,27 +67,24 @@ namespace Calculator
                         break;
                     case 2:
                         selectResult = selectNum1 - selectNum2;
-                        Console.WriteLine("Your result: {0} + {1} = {2}", selectNum1, selectNum2, selectResult);
+                        Console.WriteLine("Your result: {0} - {1} = {2}", selectNum1, selectNum2, selectResult);
                         previousCalculation.Add(string.Format("{0} - {1} = {2}", selectNum1, selectNum2, selectResult));
                         break;
 
                     case 3:
                         selectResult = selectNum1 * selectNum2;
-                        Console.WriteLine("Your result: {0} + {1} = {2}", selectNum1, selectNum2, selectResult);
+                        Console.WriteLine("Your result: {0} * {1} = {2}", selectNum1, selectNum2, selectResult);
                         previousCalculation.Add(string.Format("{0} * {1} = {2}", selectNum1, selectNum2, selectResult));
                         break;
                     case 4:
-                        selectResult = selectNum1 + selectNum2;
+                        selectResult = selectNum1 / selectNum2;
                         Console.WriteLine("Your result: {0} / {1} = {2}", selectNum1, selectNum2, selectResult);
                         previousCalculation.Add(string.Format("{0} / {1} = {2}", selectNum1, selectNum2, selectResult));
                         break;
                     default:
                         Console.WriteLine("Wrong input");
-                        SelectOperation(selectNum1, selectNum2, selectName);
-                        break;
-
-
-
+                        SelectPrintSaveOperation(selectNum1, selectNum2, selectName);
+                        break;                        
                 }
             }
 
@@ -101,12 +98,13 @@ namespace Calculator
 
                 switch (stopChoice)
                 {
-                    case 1:
-                        Console.WriteLine("Starting new calculation {0}.", continueStopName);
+                    case 1:                    
+                        Console.Clear();
+                        Console.WriteLine("Calculator");
+                        Console.WriteLine("Starting new calculation {0}.", continueStopName);                        
                         break;
                     case 2:
-                        Console.WriteLine("Your previous calculations {0}.", continueStopName);
-                        PrintSavedCalculations();
+                        PrintSavedCalculations(continueStopName);
                         ContinueSeePreviousOrStop(continueStopName);
                         break;
                     case 3:
@@ -120,9 +118,13 @@ namespace Calculator
                 }
             }
 
-            // Prints out the saved calculations saved in the list.
-            void PrintSavedCalculations()
+            // Prints out the saved calculations in the list.
+            void PrintSavedCalculations(string printSavedCalculationsName)
             {
+                Console.Clear();
+                Console.WriteLine("Calculator");
+                Console.WriteLine("Your previous calculations {0}.", printSavedCalculationsName);
+
                 foreach (string lastCalculation in previousCalculation)
                 {
                     Console.WriteLine("Previous Operation: {0}", lastCalculation);
@@ -134,7 +136,7 @@ namespace Calculator
             {
                 bool stopApp = false;
 
-                Console.WriteLine("Goodbye {0}", stopName);
+                Console.WriteLine("Goodbye {0}.", stopName);
                 return stopApp;
             }
         }
