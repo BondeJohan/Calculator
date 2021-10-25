@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Johan Andersson
+// 2021-10-25
+
+using System;
 using System.Collections.Generic;
 
 namespace Calculator
